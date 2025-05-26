@@ -93,7 +93,8 @@ CREATE TABLE potential_profit (
         LENGTH(currency) = 3 AND currency ~ '^[A-Z]{3}$'
     ),
     CONSTRAINT profit_channels_length CHECK (
-        LENGTH(distribution_channels) <= 200 AND LENGTH(distribution_channels) > 0
+        LENGTH(distribution_channels) <= 200
+    AND LENGTH(distribution_channels) > 0
     ),
     CONSTRAINT profit_calculation_date_check CHECK (
         calculation_date <= CURRENT_DATE
