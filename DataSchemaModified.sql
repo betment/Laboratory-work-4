@@ -12,8 +12,13 @@ DROP TABLE IF EXISTS user CASCADE;
 
 /* Створення ENUM типів для PostgreSQL */
 CREATE TYPE priority_level AS ENUM ('High', 'Medium', 'Low');
-CREATE TYPE goal_status AS ENUM ('Active', 'Achieved', 'Cancelled',
-  'Suspended');
+CREATE TYPE goal_status AS ENUM (
+    'Active',
+    'Achieved',
+    'Cancelled',
+    'Suspended'
+);
+
 
 /* Створення таблиці user */
 CREATE TABLE user (
@@ -78,7 +83,7 @@ CREATE TABLE musical_composition (
 CREATE TABLE potential_profit (
     profit_id SERIAL PRIMARY KEY,
     composition_id INTEGER NOT NULL
-        REFERENCES musical_composition (composition_id) ON DELETE CASCADE,
+    REFERENCES musical_composition (composition_id) ON DELETE CASCADE,
     amount DECIMAL(10, 2) NOT NULL,
     currency CHAR(3) NOT NULL,
     distribution_channels VARCHAR(200) NOT NULL,
@@ -132,7 +137,7 @@ CREATE TABLE financial_recommendations (
     recommendation_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES user (user_id) ON DELETE CASCADE,
     financial_data_id INTEGER NOT NULL
-        REFERENCES financial_data (financial_data_id) ON DELETE CASCADE,
+    REFERENCES financial_data (financial_data_id) ON DELETE CASCADE,
     description TEXT NOT NULL,
     type VARCHAR(50) NOT NULL,
     priority PRIORITY_LEVEL NOT NULL,
@@ -168,7 +173,7 @@ CREATE TABLE user_instrument_selection (
     selection_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES user (user_id) ON DELETE CASCADE,
     instrument_id INTEGER NOT NULL
-        REFERENCES musical_instrument (instrument_id) ON DELETE CASCADE,
+    REFERENCES musical_instrument (instrument_id) ON DELETE CASCADE,
     selection_date DATE NOT NULL DEFAULT CURRENT_DATE,
     CONSTRAINT user_instrument_unique UNIQUE (user_id, instrument_id)
 );
@@ -177,9 +182,9 @@ CREATE TABLE user_instrument_selection (
 CREATE TABLE composition_instrument_usage (
     usage_id SERIAL PRIMARY KEY,
     composition_id INTEGER NOT NULL
-        REFERENCES musical_composition (composition_id) ON DELETE CASCADE,
+    REFERENCES musical_composition (composition_id) ON DELETE CASCADE,
     instrument_id INTEGER NOT NULL
-        REFERENCES musical_instrument (instrument_id) ON DELETE CASCADE,
+    REFERENCES musical_instrument (instrument_id) ON DELETE CASCADE,
     usage_details TEXT,
     CONSTRAINT composition_instrument_details_length CHECK (
         usage_details IS NULL OR LENGTH(usage_details) <= 500
