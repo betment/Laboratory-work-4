@@ -94,7 +94,7 @@ CREATE TABLE potential_profit (
     ),
     CONSTRAINT profit_channels_length CHECK (
         LENGTH(distribution_channels) <= 200
-    AND LENGTH(distribution_channels) > 0
+        AND LENGTH(distribution_channels) > 0
     ),
     CONSTRAINT profit_calculation_date_check CHECK (
         calculation_date <= CURRENT_DATE
