@@ -12,7 +12,8 @@ DROP TABLE IF EXISTS user CASCADE;
 
 /* Створення ENUM типів для PostgreSQL */
 CREATE TYPE priority_level AS ENUM ('High', 'Medium', 'Low');
-CREATE TYPE goal_status AS ENUM ('Active', 'Achieved', 'Cancelled', 'Suspended');
+CREATE TYPE goal_status AS ENUM ('Active', 'Achieved', 'Cancelled',
+  'Suspended');
 
 /* Створення таблиці user */
 CREATE TABLE user (
@@ -134,7 +135,7 @@ CREATE TABLE financial_recommendations (
         REFERENCES financial_data (financial_data_id) ON DELETE CASCADE,
     description TEXT NOT NULL,
     type VARCHAR(50) NOT NULL,
-    priority priority_level NOT NULL,
+    priority PRIORITY_LEVEL NOT NULL,
     creation_date DATE NOT NULL,
     CONSTRAINT recommendations_description_length CHECK (
         LENGTH(description) <= 1000 AND LENGTH(description) > 0
@@ -154,7 +155,7 @@ CREATE TABLE financial_goals (
     description VARCHAR(200) NOT NULL,
     target_amount DECIMAL(12, 2) NOT NULL,
     deadline DATE NOT NULL,
-    status goal_status NOT NULL,
+    status GOAL_STATUS NOT NULL,
     CONSTRAINT goals_description_length CHECK (
         LENGTH(description) <= 200 AND LENGTH(description) > 0
     ),
